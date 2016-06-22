@@ -55,21 +55,14 @@
     <script>
     var model = {
         user: "Kiran",
-        items: [{
-            action: "Buy Flowers",
-            done: false
-        }, {
-            action: "Get Shoes",
-            done: false
-        }, {
-            action: "Collect Tickets",
-            done: true
-        }, {
-            action: "Call Sai",
-            done: false
-        }]
     };
     var todoApp = angular.module("todoApp", []);
+    todoApp.run(['$http', function($http) {
+        $http.get('todo.json').success(function(resp) {
+            console.log(resp);
+            model.items = resp;
+        })
+    }]);
     todoApp.controller('ToDoController', ['$scope', function($scope) {
         $scope.todo = model;
         $scope.addItem = function() {
